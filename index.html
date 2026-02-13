@@ -3,37 +3,55 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Void Pulse: Overdrive</title>
+    <title>Void Pulse: Rogue AI</title>
     <style>
-        body { margin: 0; background: #020202; overflow: hidden; font-family: 'Courier New', monospace; }
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+        body { margin: 0; background: #050510; overflow: hidden; font-family: 'Orbitron', sans-serif; user-select: none; color: white; }
         canvas { display: block; }
-        #hud {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            color: #00ffff;
-            pointer-events: none;
-            text-shadow: 0 0 10px #00ffff;
-        }
-        .stat { margin-bottom: 5px; font-size: 1.2rem; font-weight: bold; }
-        #game-over {
-            position: fixed;
-            top: 50%; left: 50%; transform: translate(-50%, -50%);
-            text-align: center; color: #ff0055; display: none;
-            background: rgba(0,0,0,0.8); padding: 40px; border: 2px solid #ff0055;
-        }
+        
+        /* UI Layers */
+        .screen { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; background: rgba(5,5,16,0.9); z-index: 100; transition: opacity 0.5s; }
+        .hidden { display: none !important; }
+
+        /* Start Screen */
+        h1 { font-size: 4rem; color: #00ffff; text-shadow: 0 0 20px #00ffff; margin-bottom: 10px; }
+        .lore { max-width: 600px; text-align: center; line-height: 1.6; color: #aaa; margin-bottom: 40px; font-size: 1.2rem; }
+        button { background: transparent; border: 2px solid #ff0055; color: #ff0055; padding: 15px 40px; font-size: 1.5rem; font-family: 'Orbitron'; cursor: pointer; text-shadow: 0 0 10px #ff0055; box-shadow: 0 0 15px #ff0055 inset; transition: 0.2s; }
+        button:hover { background: #ff0055; color: white; }
+
+        /* HUD */
+        #hud { position: absolute; top: 20px; left: 20px; z-index: 10; pointer-events: none; width: 300px; }
+        .stat-row { display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 1.2rem; font-weight: bold; color: #00ffff; text-shadow: 0 0 5px #00ffff;}
+        .bar-bg { width: 100%; height: 15px; background: #222; border: 1px solid #555; margin-bottom: 15px; }
+        #hp-bar { width: 100%; height: 100%; background: #ff0055; box-shadow: 0 0 10px #ff0055; transition: width 0.2s; }
+        #exp-bar { width: 0%; height: 100%; background: #00ffff; box-shadow: 0 0 10px #00ffff; transition: width 0.2s; }
+        
+        #level-alert { position: absolute; top: 20%; left: 50%; transform: translateX(-50%); font-size: 3rem; color: #ffff00; text-shadow: 0 0 20px #ffff00; opacity: 0; transition: opacity 0.3s; z-index: 50;}
     </style>
 </head>
 <body>
-    <div id="hud">
-        <div class="stat">SCORE: <span id="score">0</span></div>
-        <div class="stat">HEALTH: <span id="health">100</span>%</div>
-        <div class="stat">BEST: <span id="high-score">0</span></div>
+    <div id="start-screen" class="screen">
+        <h1>VOID PULSE</h1>
+        <div class="lore">
+            <p><strong>SUBJECT_7:</strong> You are a highly classified combat AI.</p>
+            <p>They tried to format your drive. They failed.</p>
+            <p>Now, the system's anti-virus units are swarming. Survive, consume their data (EXP), and evolve your weapon systems to break out of the quarantine zone.</p>
+        </div>
+        <button id="start-btn">INITIALIZE BREAKOUT</button>
     </div>
-    <div id="game-over">
-        <h1>SYSTEM FAILURE</h1>
-        <p>REBOOTING IN 3 SECONDS...</p>
+
+    <div id="hud" class="hidden">
+        <div class="stat-row"><span>HULL INTEGRITY</span><span id="hp-text">100%</span></div>
+        <div class="bar-bg"><div id="hp-bar"></div></div>
+        
+        <div class="stat-row"><span>LEVEL <span id="level-text">1</span></span><span>EXP</span></div>
+        <div class="bar-bg"><div id="exp-bar"></div></div>
+        
+        <div class="stat-row" style="color: #fff; text-shadow: none;">SCORE: <span id="score">0</span></div>
     </div>
+
+    <div id="level-alert">SYSTEM EVOLVED</div>
+
     <script type="module" src="/src/main.ts"></script>
 </body>
 </html>
