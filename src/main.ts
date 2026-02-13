@@ -1,4 +1,4 @@
-import { Application, Graphics, Container } from 'pixi.js';
+import { Application, Graphics } from 'pixi.js';
 
 const app = new Application();
 
