@@ -3,14 +3,37 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Void Pulse</title>
+    <title>Void Pulse: Overdrive</title>
     <style>
-        body { margin: 0; background: #020202; overflow: hidden; }
+        body { margin: 0; background: #020202; overflow: hidden; font-family: 'Courier New', monospace; }
         canvas { display: block; }
+        #hud {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: #00ffff;
+            pointer-events: none;
+            text-shadow: 0 0 10px #00ffff;
+        }
+        .stat { margin-bottom: 5px; font-size: 1.2rem; font-weight: bold; }
+        #game-over {
+            position: fixed;
+            top: 50%; left: 50%; transform: translate(-50%, -50%);
+            text-align: center; color: #ff0055; display: none;
+            background: rgba(0,0,0,0.8); padding: 40px; border: 2px solid #ff0055;
+        }
     </style>
 </head>
 <body>
-    <div id="game-container"></div>
+    <div id="hud">
+        <div class="stat">SCORE: <span id="score">0</span></div>
+        <div class="stat">HEALTH: <span id="health">100</span>%</div>
+        <div class="stat">BEST: <span id="high-score">0</span></div>
+    </div>
+    <div id="game-over">
+        <h1>SYSTEM FAILURE</h1>
+        <p>REBOOTING IN 3 SECONDS...</p>
+    </div>
     <script type="module" src="/src/main.ts"></script>
 </body>
 </html>
